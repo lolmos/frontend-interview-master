@@ -59,7 +59,7 @@ const WifiScreen = () => {
           wifiNetworks.map((network) => {
             const { ssid, signalStrength } = network;
             return (
-              <option value={ssid}>
+              <option value={ssid} key={ssid+signalStrength}>
                 {ssid} - strength {signalStrength}
               </option>
             );

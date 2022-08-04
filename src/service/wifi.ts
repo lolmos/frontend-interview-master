@@ -7,9 +7,21 @@
 
 // You do not need to read how the functions work to solve the problem
 // Ask any questions
+export interface WifiNetwork {
+  ssid: string;
+  signalStrength: number; // higher is stronger signal
+}
 
-const subscribers = [];
-let timeout = undefined;
+export interface TimeOut {
+  (callback:typeof setTimeout) : void 
+}
+
+export interface CallBack {
+  (wifiNetwork: WifiNetwork) : void
+}
+
+const subscribers:CallBack[] = [];
+let timeout:undefined | any  = undefined;
 
 /*
     callback is a function like this:
@@ -20,11 +32,10 @@ let timeout = undefined;
         signalStrength: number; // higher is stronger signal
     }
 */
-const callback = (wifiNetwork) => {
-  console.log(wifiNetwork);
-};
 
-export function subscribe(callback) {
+
+
+export function subscribe(callback:CallBack) {
   subscribers.push(callback);
 }
 
@@ -54,6 +65,6 @@ export function stopScan() {
   timeout = undefined;
 }
 
-export function unsubscribe(callback) {
+export function unsubscribe(callback:CallBack) {
   subscribers.filter((cb) => cb !== callback);
 }

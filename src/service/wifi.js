@@ -20,6 +20,10 @@ let timeout = undefined;
         signalStrength: number; // higher is stronger signal
     }
 */
+const callback = (wifiNetwork) => {
+  console.log(wifiNetwork);
+};
+
 export function subscribe(callback) {
   subscribers.push(callback);
 }
@@ -36,9 +40,9 @@ export function startScan() {
   const discover = () => {
     const network = {
       ssid: `ssid-${Math.ceil(Math.random() * 20)}`,
-      signalStrength: Math.random()
+      signalStrength: Math.random(),
     };
-    subscribers.forEach(callback => callback(network));
+    subscribers.forEach((callback) => callback(network));
     timeout = setTimeout(discover, 200);
   };
 
@@ -51,5 +55,5 @@ export function stopScan() {
 }
 
 export function unsubscribe(callback) {
-  subscribers.filter(cb => cb !== callback);
+  subscribers.filter((cb) => cb !== callback);
 }
